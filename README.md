@@ -1,6 +1,6 @@
 # MangoWC
 
-<img width="255" height="256" alt="mango-transparency-256" src="https://github.com/user-attachments/assets/54caff2c-932f-4998-a090-2a5292ebbfa4" />
+<img width="255" height="256" alt="mango-transparency-256" src="https://github.com/DreamMaoMao/mangowc/blob/main/assets/mango-transparency-256.png" />
 
 
 This project's development is based on [dwl](https://codeberg.org/dwl/dwl/).
@@ -16,17 +16,13 @@ This project's development is based on [dwl](https://codeberg.org/dwl/dwl/).
      - Base tags not workspaces (supports separate window layouts for each tag)
      - Smooth and customizable complete animations (window open/move/close, tag enter/leave,layer open/close/move)
      - Excellent input method support (text input v2/v3)
-     - Flexible window layouts with easy switching (scroller, master, monocle, spiral, etc.)
+     - Flexible window layouts with easy switching (scroller, master-stack, monocle,center-master, etc.)
      - Rich window states (swallow, minimize, maximize, unglobal, global, fakefullscreen, overlay, etc.)
      - Simple yet powerful external configuration(support shortcuts hot-reload)
      - Sway-like scratchpad and named scratchpad
      - Ipc support(get/send message from/to compositor by external program)
      - Hycov-like overview
      - Window effects from scenefx (blur, shadow, corner radius, opacity)
-
-3. **Some disadvantages**
-   - Since it uses the fully automatic layout like dwm style, it does not allow you to manually adjust the window size when the window is in tiled state. It only allows you to use dispatch like `setmfact` or `increase_proportion` bind to adjust the tiled window ratio.
-
 
 Master-Stack Layout
 
@@ -41,25 +37,20 @@ Layer animaiton
 https://github.com/user-attachments/assets/014c893f-115c-4ae9-8342-f9ae3e9a0df0
 
 
+# Our discord
+[mangowc](https://discord.gg/CPjbDxesh5)
+
 # Supported layouts
 
-## Horizontal Layouts
 - tile
 - scroller
 - monocle
 - grid
-- dwindle
-- spiral
 - deck
-
-## Vertical Layouts
+- center_tile
 - vertical_tile
-- vertical_scroller
-- vertical_monocle
 - vertical_grid
-- vertical_dwindle
-- vertical_spiral
-- vertical_deck
+- vertical_scroller
 
 # Installation
 
@@ -80,9 +71,11 @@ https://github.com/user-attachments/assets/014c893f-115c-4ae9-8342-f9ae3e9a0df0
 - hwdata
 - seatd
 - pcre2
+- xorg-xwayland
+- libxcb
 
 ## Arch Linux
-
+The package is in the Arch User Repository and is availble for manual download [here](https://aur.archlinux.org/packages/mangowc-git) or through a AUR helper like yay:
 ```bash
 yay -S mangowc-git
 
@@ -110,12 +103,12 @@ emerge --ask --verbose gui-wm/mangowc
 ## Other
 
 ```bash
-git clone -b 0.19.1 https://gitlab.freedesktop.org/wlroots/wlroots.git
+git clone -b 0.19.2 https://gitlab.freedesktop.org/wlroots/wlroots.git
 cd wlroots
 meson build -Dprefix=/usr
 sudo ninja -C build install
 
-git clone https://github.com/wlrfx/scenefx.git
+git clone -b 0.4.1 https://github.com/wlrfx/scenefx.git
 cd scenefx
 meson build -Dprefix=/usr
 sudo ninja -C build install
@@ -128,6 +121,10 @@ sudo ninja -C build install
 
 ## Suggested Tools
 
+### Hybrid component
+- [dms-shell](https://github.com/AvengeMedia/DankMaterialShell)
+
+### Independent component
 - Application launcher (rofi, bemenu, wmenu, fuzzel)
 - Terminal emulator (foot, wezterm, alacritty, kitty, ghostty)
 - Status bar (waybar, eww, quickshell, ags), waybar is preferred
@@ -148,13 +145,25 @@ sudo ninja -C build install
 
 ## My Dotfiles
 
+### Daily
 - Dependencies
 
 ```bash
 yay -S rofi foot xdg-desktop-portal-wlr swaybg waybar wl-clip-persist cliphist wl-clipboard wlsunset xfce-polkit swaync pamixer wlr-dpms sway-audio-idle-inhibit-git swayidle dimland-git brightnessctl swayosd wlr-randr grim slurp satty swaylock-effects-git wlogout sox
 ```
 
-- use my config
+### Dms
+- Dependencies
+```bash
+yay -S foot xdg-desktop-portal-wlr swaybg wl-clip-persist cliphist wl-clipboard sway-audio-idle-inhibit-git brightnessctl grim slurp satty matugen-bin dms-shell-git
+
+```
+- use my dms config
+
+```bash
+git clone -b dms https://github.com/DreamMaoMao/mango-config.git ~/.config/mango
+```
+- use my daily config
 
 ```bash
 git clone https://github.com/DreamMaoMao/mango-config.git ~/.config/mango
@@ -182,7 +191,10 @@ Here's an example of using the modules in a flake:
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    mango.url = "github:DreamMaoMao/mango";
+    mango = {
+      url = "github:DreamMaoMao/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{ self, flake-parts, ... }:

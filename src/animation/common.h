@@ -9,6 +9,8 @@ struct dvec2 calculate_animation_curve_at(double t, int type) {
 		animation_curve = animation_curve_tag;
 	} else if (type == CLOSE) {
 		animation_curve = animation_curve_close;
+	} else if (type == FOCUS) {
+		animation_curve = animation_curve_focus;
 	} else {
 		animation_curve = animation_curve_move;
 	}
@@ -28,30 +30,36 @@ void init_baked_points(void) {
 	baked_points_tag = calloc(BAKED_POINTS_COUNT, sizeof(*baked_points_tag));
 	baked_points_close =
 		calloc(BAKED_POINTS_COUNT, sizeof(*baked_points_close));
+	baked_points_focus =
+		calloc(BAKED_POINTS_COUNT, sizeof(*baked_points_focus));
 
-	for (unsigned int i = 0; i < BAKED_POINTS_COUNT; i++) {
+	for (uint32_t i = 0; i < BAKED_POINTS_COUNT; i++) {
 		baked_points_move[i] = calculate_animation_curve_at(
 			(double)i / (BAKED_POINTS_COUNT - 1), MOVE);
 	}
-	for (unsigned int i = 0; i < BAKED_POINTS_COUNT; i++) {
+	for (uint32_t i = 0; i < BAKED_POINTS_COUNT; i++) {
 		baked_points_open[i] = calculate_animation_curve_at(
 			(double)i / (BAKED_POINTS_COUNT - 1), OPEN);
 	}
-	for (unsigned int i = 0; i < BAKED_POINTS_COUNT; i++) {
+	for (uint32_t i = 0; i < BAKED_POINTS_COUNT; i++) {
 		baked_points_tag[i] = calculate_animation_curve_at(
 			(double)i / (BAKED_POINTS_COUNT - 1), TAG);
 	}
-	for (unsigned int i = 0; i < BAKED_POINTS_COUNT; i++) {
+	for (uint32_t i = 0; i < BAKED_POINTS_COUNT; i++) {
 		baked_points_close[i] = calculate_animation_curve_at(
 			(double)i / (BAKED_POINTS_COUNT - 1), CLOSE);
+	}
+	for (uint32_t i = 0; i < BAKED_POINTS_COUNT; i++) {
+		baked_points_focus[i] = calculate_animation_curve_at(
+			(double)i / (BAKED_POINTS_COUNT - 1), FOCUS);
 	}
 }
 
 double find_animation_curve_at(double t, int type) {
-	unsigned int down = 0;
-	unsigned int up = BAKED_POINTS_COUNT - 1;
+	uint32_t down = 0;
+	uint32_t up = BAKED_POINTS_COUNT - 1;
 
-	unsigned int middle = (up + down) / 2;
+	uint32_t middle = (up + down) / 2;
 	struct dvec2 *baked_points;
 	if (type == MOVE) {
 		baked_points = baked_points_move;
@@ -61,6 +69,8 @@ double find_animation_curve_at(double t, int type) {
 		baked_points = baked_points_tag;
 	} else if (type == CLOSE) {
 		baked_points = baked_points_close;
+	} else if (type == FOCUS) {
+		baked_points = baked_points_focus;
 	} else {
 		baked_points = baked_points_move;
 	}
@@ -74,22 +84,6 @@ double find_animation_curve_at(double t, int type) {
 		middle = (up + down) / 2;
 	}
 	return baked_points[up].y;
-}
-
-double all_output_frame_duration_ms() {
-	int32_t refresh_total = 0;
-	Monitor *m;
-	wl_list_for_each(m, &mons, link) {
-		if (!m->wlr_output->enabled) {
-			continue;
-		}
-		refresh_total += m->wlr_output->refresh;
-	}
-	return 1000000.0 / refresh_total;
-}
-
-double output_frame_duration_ms(Monitor *m) {
-	return 1000000.0 / m->wlr_output->refresh;
 }
 
 static bool scene_node_snapshot(struct wlr_scene_node *node, int lx, int ly,
@@ -234,4 +228,14 @@ struct wlr_scene_tree *wlr_scene_tree_snapshot(struct wlr_scene_node *node,
 	wlr_scene_node_set_enabled(&snapshot->node, true);
 
 	return snapshot;
+}
+
+void request_fresh_all_monitors(void) {
+	Monitor *m = NULL;
+	wl_list_for_each(m, &mons, link) {
+		if (!m->wlr_output->enabled) {
+			continue;
+		}
+		wlr_output_schedule_frame(m->wlr_output);
+	}
 }
