@@ -1,7 +1,7 @@
-# MangoWC
-
-<img width="255" height="256" alt="mango-transparency-256" src="https://github.com/DreamMaoMao/mangowc/blob/main/assets/mango-transparency-256.png" />
-
+# Mango Wayland Compositor
+<div>
+  <img src="https://github.com/DreamMaoMao/mangowc/blob/main/assets/mango-transparency-256.png" alt="MangoWC Logo" width="120"/>
+</div>
 
 This project's development is based on [dwl](https://codeberg.org/dwl/dwl/).
 
@@ -32,7 +32,7 @@ Scroller Layout
 
 https://github.com/user-attachments/assets/c9bf9415-fad1-4400-bcdc-3ad2d76de85a
 
-Layer animaiton
+Layer animation
 
 https://github.com/user-attachments/assets/014c893f-115c-4ae9-8342-f9ae3e9a0df0
 
@@ -82,7 +82,6 @@ yay -S mangowc-git
 ```
 
 ## Gentoo Linux
-
 The package is in the community-maintained repository called GURU.
 First, add GURU repository:
 
@@ -98,6 +97,16 @@ Finally, install the package:
 
 ```bash
 emerge --ask --verbose gui-wm/mangowc
+```
+
+## Fedora Linux
+The package is in the third-party Terra repository.
+First, add the [Terra Repository](https://terra.fyralabs.com/).
+
+Then, install the package:
+
+```bash
+dnf install mangowc
 ```
 
 ## Other
@@ -172,7 +181,9 @@ git clone https://github.com/DreamMaoMao/mango-config.git ~/.config/mango
 
 ## Config Documentation
 
-Refer to the [wiki](https://github.com/DreamMaoMao/mango/wiki/)
+Refer to the repo wiki [wiki](https://github.com/DreamMaoMao/mango/wiki/)
+
+or the website docs [docs](https://mangowc.vercel.app/docs)
 
 # NixOS + Home-manager
 
