@@ -24,18 +24,7 @@ This project's development is based on [dwl](https://codeberg.org/dwl/dwl/).
      - Hycov-like overview
      - Window effects from scenefx (blur, shadow, corner radius, opacity)
 
-Master-Stack Layout
-
-https://github.com/user-attachments/assets/a9d4776e-b50b-48fb-94ce-651d8a749b8a
-
-Scroller Layout
-
-https://github.com/user-attachments/assets/c9bf9415-fad1-4400-bcdc-3ad2d76de85a
-
-Layer animation
-
-https://github.com/user-attachments/assets/014c893f-115c-4ae9-8342-f9ae3e9a0df0
-
+https://github.com/user-attachments/assets/bb83004a-0563-4b48-ad89-6461a9b78b1f
 
 # Our discord
 [mangowc](https://discord.gg/CPjbDxesh5)
@@ -75,7 +64,7 @@ https://github.com/user-attachments/assets/014c893f-115c-4ae9-8342-f9ae3e9a0df0
 - libxcb
 
 ## Arch Linux
-The package is in the Arch User Repository and is availble for manual download [here](https://aur.archlinux.org/packages/mangowc-git) or through a AUR helper like yay:
+The package is in the Arch User Repository and is available for manual download [here](https://aur.archlinux.org/packages/mangowc-git) or through a AUR helper like yay:
 ```bash
 yay -S mangowc-git
 
@@ -285,3 +274,15 @@ Read The Friendly Manual on packaging software in your distribution first.
 - https://github.com/swaywm/sway - Sample of Wayland protocol
 
 - https://github.com/wlrfx/scenefx - Make it simple to add window effect.
+
+
+# Sponsor
+At present, I can only accept sponsorship through an encrypted connection.
+If you find this project helpful to you, you can offer sponsorship in the following ways.
+
+<img width="650" height="870" alt="image" src="https://github.com/user-attachments/assets/8c860317-90d2-4071-971d-f1a92b674469" />
+
+
+Thanks to the following friends for their sponsorship of this project
+
+[@tonybanters](https://github.com/tonybanters)
